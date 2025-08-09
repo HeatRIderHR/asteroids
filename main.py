@@ -2,9 +2,18 @@ import pygame
 from constants import *
 
 def main():
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    
     print("Starting Asteroids!")
-    print(f"Screen Width {SCREEN_WIDTH}")
-    print(f"Screen Width {SCREEN_HEIGHT}")
+    print(f"Screen width: {SCREEN_WIDTH}")
+    print(f"Screen height: {SCREEN_HEIGHT}")
+    
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return
+            screen.fill("#000000")
+        pygame.display.flip()
 
 
 if __name__ == "__main__":
