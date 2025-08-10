@@ -65,5 +65,3 @@ class Shot(CircleShape):
     def update(self, dt):
        self.position += pygame.Vector2(0, 1).rotate(self.rotation) * 500 * dt
    
-    def collision(self, other):
-       pass

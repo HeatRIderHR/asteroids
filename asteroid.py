@@ -14,6 +14,3 @@ class Asteroid(CircleShape):
         
     def asteroids():
        pass
-   
-    def collision(self, other):
-       pass
