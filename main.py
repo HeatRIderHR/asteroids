@@ -43,6 +43,10 @@ def main():
             
         pygame.display.flip()
         
+        for asteroid in asteroids:
+            if player.collision(asteroid):
+                print("GAME OVER")
+                sys.exit()
         
         
         dt = timeClock.tick(60) / 1000
