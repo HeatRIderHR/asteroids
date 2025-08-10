@@ -25,8 +25,6 @@ class CircleShape(pygame.sprite.Sprite):
         distanceFromCenters = self.position.distance_squared_to(other.position)
         
         if distanceFromCenters <= self.radius + other.radius:
-            print(distanceFromCenters)
             return True
-        
         return False
         
