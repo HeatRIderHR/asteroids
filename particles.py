@@ -13,12 +13,11 @@ class Explosion(CircleShape):
         pygame.draw.circle(screen, "#dd0022",  self.position, self.radius)
         
     def update(self, dt):
-        for i in range(0, 1000):
-            self.lifeTime -= 1
-            if self.lifeTime // 100 <= 0 and self.hasNotSplit:
-                self.hasNotSplit = False
-                self.split()
-            
+        if self.hasNotSplit:
+            self.hasNotSplit = False
+            self.split()
+        self.lifeTime -= 1 *dt
+        self.radius = EXPLOSION_MAX_SIZE * (self.lifeTime / EXPLOSION_LIFE_TIME)
         if self.lifeTime <= 0:
             self.kill()
         self.position += self.velocity * dt
@@ -33,7 +32,10 @@ class Explosion(CircleShape):
 
     
     def newExplosion(self, angle):
-
+        
         explosion = Explosion(self.position.x, self.position.y, self.radius - EXPLOSION_DECAY)
-        explosion.velocity = (self.velocity.rotate(angle) + pygame.Vector2(0, 1).rotate(angle)) * (random.randint(100,120) / 10)
+        explosion.velocity = (pygame.Vector2(0, random.randint(50, 250)).rotate(angle))
+        explosion.size = random.randint(EXPLOSION_MIN_SIZE, EXPLOSION_MAX_SIZE)
+        explosion.hasNotSplit = False
+        self.kill()
         

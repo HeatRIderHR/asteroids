@@ -61,9 +61,6 @@ def main():
         screen.blit(text, textRect)
         
         pygame.display.flip()
-        if len(explosions) > 100:
-            for explosion in explosions:
-                explosion.hasNotSplit = False
         for asteroid in asteroids:
             for shot in shots:
                 if asteroid.collision(shot):
