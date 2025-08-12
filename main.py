@@ -8,6 +8,7 @@ from asteroidfield import *
 
 def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    pygame.display.set_caption('Asteroids')
     
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -31,6 +32,12 @@ def main():
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     asteroidfield = AsteroidField()
     
+    pygame.init()
+    
+    font = pygame.font.Font(None, 32)
+    
+    score = 0
+    
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -43,8 +50,14 @@ def main():
         for objects in drawable:
             objects.draw(screen)
             
-        pygame.display.flip()
         
+        score += 1
+        text = font.render(f"Score:{score}", True, "white", "black")
+        textRect = text.get_rect()
+        textRect.center = (SCREEN_WIDTH // 16, SCREEN_HEIGHT // 16)
+        screen.blit(text, textRect)
+        
+        pygame.display.flip()
         for asteroid in asteroids:
             for shot in shots:
                 if asteroid.collision(shot):
@@ -52,7 +65,7 @@ def main():
                     shot.kill()
                 
             if player.collision(asteroid):
-                print("GAME OVER")
+                print(f"GAME OVER Score:{score}")
                 return
         
         
