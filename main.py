@@ -4,7 +4,7 @@ from circleshape import *
 from player import *
 from asteroid import *
 from asteroidfield import *
-
+from particles import *
 
 def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
@@ -23,11 +23,14 @@ def main():
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
     shots = pygame.sprite.Group()
+    explosions = pygame.sprite.Group()
     
     Player.containers = (updatable, drawable)
     Asteroid.containers = (asteroids, updatable, drawable)
     AsteroidField.containers = (updatable)
     Shot.containers = (shots, updatable, drawable)
+    Explosion.containers = (explosions, updatable, drawable)
+    
     
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
     asteroidfield = AsteroidField()
@@ -58,16 +61,20 @@ def main():
         screen.blit(text, textRect)
         
         pygame.display.flip()
+        if len(explosions) > 100:
+            for explosion in explosions:
+                explosion.hasNotSplit = False
         for asteroid in asteroids:
             for shot in shots:
                 if asteroid.collision(shot):
+                    explosion = Explosion(shot.position.x, shot.position.y)
                     asteroid.split()
                     shot.kill()
                 
             if player.collision(asteroid):
                 print(f"GAME OVER Score:{score}")
                 return
-        
+
         
         dt = timeClock.tick(60) / 1000
 
