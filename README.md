@@ -2,10 +2,10 @@ An asteroid game
 
 Extending the Project
 
-    Add a scoring system
+    Add a scoring system DONE 
     Implement multiple lives and respawning
-    Add an explosion effect for the asteroids
-    Add acceleration to the player movement
+    Add an explosion effect for the asteroids DONE
+    Add acceleration to the player movement DONE
     Make the objects wrap around the screen instead of disappearing
     Add a background image
     Create different weapon types

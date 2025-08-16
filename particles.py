@@ -2,6 +2,7 @@ import pygame
 from constants import *
 from circleshape import CircleShape
 import random
+from updateFunctions import *
 
 class Explosion(CircleShape):
     def __init__(self, x, y, radius = EXPLOSION_MAX_SIZE):
@@ -21,6 +22,7 @@ class Explosion(CircleShape):
         if self.lifeTime <= 0:
             self.kill()
         self.position += self.velocity * dt
+        self.position = screenWrapEntity(self.position)
         
     def split(self):
         self.kill()

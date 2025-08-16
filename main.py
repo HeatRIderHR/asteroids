@@ -68,7 +68,7 @@ def main():
                     asteroid.split()
                     shot.kill()
                 
-            if player.collision(asteroid):
+            if player.collision(asteroid) and player.canCollide:
                 print(f"GAME OVER Score:{score}")
                 return
 

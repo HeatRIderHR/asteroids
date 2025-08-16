@@ -1,7 +1,7 @@
 import pygame
 from constants import *
 from circleshape import CircleShape
-
+from updateFunctions import *
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -9,6 +9,7 @@ class Player(CircleShape):
         self.rotation = 0
         self.shotCoolDown = 0 
         self.velocity = pygame.Vector2(0,0)
+        self.canCollide = True
         
     def triangle(self):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
@@ -35,12 +36,15 @@ class Player(CircleShape):
         if keys[pygame.K_s]:
             self.velocity -= pygame.Vector2(0, 10 * dt)
 
-        print(self.velocity)
+        
         if  self.velocity.y > PLAYER_MAX_VELOCITY :
             self.velocity = pygame.Vector2(0, PLAYER_MAX_VELOCITY)
         elif self.velocity.y < -PLAYER_MAX_VELOCITY:
             self.velocity = pygame.Vector2(0, -PLAYER_MAX_VELOCITY)
+            
         self.move(dt)
+        
+        self.position = screenWrapEntity(self.position)
         
         self.shotCoolDown -= dt
         if keys[pygame.K_SPACE]:
@@ -48,7 +52,13 @@ class Player(CircleShape):
             if self.shotCoolDown <= 0:
                 self.shotCoolDown = PLAYER_SHOOT_COOLDOWN
                 self.shoot()
+        
+        ## Debug mode
+        if keys[pygame.K_i]:
+            self.canCollide = not self.canCollide
             
+        
+         
     def rotate(self, dt):
         
         self.rotation += PLAYER_TURN_SPEED * dt
@@ -72,4 +82,6 @@ class Shot(CircleShape):
         
     def update(self, dt):
        self.position += pygame.Vector2(0, 1).rotate(self.rotation) * 500 * dt
+       self.position = screenWrapEntity(self.position)
+       
    
